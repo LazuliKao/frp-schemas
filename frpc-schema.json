@@ -1,0 +1,1784 @@
+{
+  "$defs": {
+    "AuthClientConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "additionalScopes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "method": {
+          "type": "string"
+        },
+        "oidc": {
+          "$ref": "#/$defs/AuthOIDCClientConfig"
+        },
+        "token": {
+          "type": "string"
+        },
+        "tokenSource": {
+          "$ref": "#/$defs/ValueSource"
+        }
+      },
+      "type": "object"
+    },
+    "AuthOIDCClientConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "additionalEndpointParams": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "audience": {
+          "type": "string"
+        },
+        "clientID": {
+          "type": "string"
+        },
+        "clientSecret": {
+          "type": "string"
+        },
+        "insecureSkipVerify": {
+          "type": "boolean"
+        },
+        "proxyURL": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "tokenEndpointURL": {
+          "type": "string"
+        },
+        "tokenSource": {
+          "$ref": "#/$defs/ValueSource"
+        },
+        "trustedCaFile": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ClientConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "auth": {
+          "$ref": "#/$defs/AuthClientConfig"
+        },
+        "dnsServer": {
+          "type": "string"
+        },
+        "featureGates": {
+          "additionalProperties": {
+            "type": "boolean"
+          },
+          "type": "object"
+        },
+        "includes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "log": {
+          "$ref": "#/$defs/LogConfig"
+        },
+        "loginFailExit": {
+          "type": "boolean"
+        },
+        "metadatas": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "natHoleStunServer": {
+          "type": "string"
+        },
+        "proxies": {
+          "items": {
+            "$ref": "#/$defs/ProxyConfig"
+          },
+          "type": "array"
+        },
+        "serverAddr": {
+          "type": "string"
+        },
+        "serverPort": {
+          "type": "integer"
+        },
+        "start": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "transport": {
+          "$ref": "#/$defs/ClientTransportConfig"
+        },
+        "udpPacketSize": {
+          "type": "integer"
+        },
+        "user": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "virtualNet": {
+          "$ref": "#/$defs/VirtualNetConfig"
+        },
+        "visitors": {
+          "items": {
+            "$ref": "#/$defs/TypedVisitorConfig"
+          },
+          "type": "array"
+        },
+        "webServer": {
+          "$ref": "#/$defs/WebServerConfig"
+        }
+      },
+      "required": [],
+      "type": "object"
+    },
+    "ClientTransportConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "connectServerLocalIP": {
+          "type": "string"
+        },
+        "dialServerKeepalive": {
+          "type": "integer"
+        },
+        "dialServerTimeout": {
+          "type": "integer"
+        },
+        "heartbeatInterval": {
+          "type": "integer"
+        },
+        "heartbeatTimeout": {
+          "type": "integer"
+        },
+        "poolCount": {
+          "type": "integer"
+        },
+        "protocol": {
+          "type": "string"
+        },
+        "proxyURL": {
+          "type": "string"
+        },
+        "quic": {
+          "$ref": "#/$defs/QUICOptions"
+        },
+        "tcpMux": {
+          "type": "boolean"
+        },
+        "tcpMuxKeepaliveInterval": {
+          "type": "integer"
+        },
+        "tls": {
+          "$ref": "#/$defs/TLSClientConfig"
+        }
+      },
+      "type": "object"
+    },
+    "ExecEnvVar": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "type": "object"
+    },
+    "ExecSource": {
+      "additionalProperties": false,
+      "properties": {
+        "args": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "command": {
+          "type": "string"
+        },
+        "env": {
+          "items": {
+            "$ref": "#/$defs/ExecEnvVar"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "command"
+      ],
+      "type": "object"
+    },
+    "FileSource": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "type": "object"
+    },
+    "HTTPProxyConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "annotations": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "customDomains": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "healthCheck": {
+          "$ref": "#/$defs/HTTPProxyConfig_HealthCheckConfig"
+        },
+        "hostHeaderRewrite": {
+          "type": "string"
+        },
+        "httpPassword": {
+          "type": "string"
+        },
+        "httpUser": {
+          "type": "string"
+        },
+        "loadBalancer": {
+          "$ref": "#/$defs/HTTPProxyConfig_LoadBalancerConfig"
+        },
+        "localIP": {
+          "type": "string"
+        },
+        "localPort": {
+          "type": "integer"
+        },
+        "locations": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "metadatas": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "name": {
+          "type": "string"
+        },
+        "plugin": {
+          "$ref": "#/$defs/HTTPProxyConfig_TypedClientPluginOptions"
+        },
+        "requestHeaders": {
+          "$ref": "#/$defs/HTTPProxyConfig_HeaderOperations"
+        },
+        "responseHeaders": {
+          "$ref": "#/$defs/HTTPProxyConfig_HeaderOperations"
+        },
+        "routeByHTTPUser": {
+          "type": "string"
+        },
+        "subdomain": {
+          "type": "string"
+        },
+        "transport": {
+          "$ref": "#/$defs/HTTPProxyConfig_ProxyTransport"
+        },
+        "type": {
+          "description": "Proxy type (must be http)",
+          "enum": [
+            "http"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "type": "object"
+    },
+    "HTTPProxyConfig_BandwidthQuantity": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "HTTPProxyConfig_HTTPHeader": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "type": "object"
+    },
+    "HTTPProxyConfig_HeaderOperations": {
+      "additionalProperties": false,
+      "properties": {
+        "set": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "HTTPProxyConfig_HealthCheckConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "httpHeaders": {
+          "items": {
+            "$ref": "#/$defs/HTTPProxyConfig_HTTPHeader"
+          },
+          "type": "array"
+        },
+        "intervalSeconds": {
+          "type": "integer"
+        },
+        "maxFailed": {
+          "type": "integer"
+        },
+        "path": {
+          "type": "string"
+        },
+        "timeoutSeconds": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "intervalSeconds"
+      ],
+      "type": "object"
+    },
+    "HTTPProxyConfig_LoadBalancerConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "group": {
+          "type": "string"
+        },
+        "groupKey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "group"
+      ],
+      "type": "object"
+    },
+    "HTTPProxyConfig_ProxyTransport": {
+      "additionalProperties": false,
+      "properties": {
+        "bandwidthLimit": {
+          "$ref": "#/$defs/HTTPProxyConfig_BandwidthQuantity"
+        },
+        "bandwidthLimitMode": {
+          "type": "string"
+        },
+        "proxyProtocolVersion": {
+          "type": "string"
+        },
+        "useCompression": {
+          "type": "boolean"
+        },
+        "useEncryption": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "HTTPProxyConfig_TypedClientPluginOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "ClientPluginOptions": true,
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "ClientPluginOptions"
+      ],
+      "type": "object"
+    },
+    "HTTPSProxyConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "annotations": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "customDomains": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "healthCheck": {
+          "$ref": "#/$defs/HTTPSProxyConfig_HealthCheckConfig"
+        },
+        "loadBalancer": {
+          "$ref": "#/$defs/HTTPSProxyConfig_LoadBalancerConfig"
+        },
+        "localIP": {
+          "type": "string"
+        },
+        "localPort": {
+          "type": "integer"
+        },
+        "metadatas": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "name": {
+          "type": "string"
+        },
+        "plugin": {
+          "$ref": "#/$defs/HTTPSProxyConfig_TypedClientPluginOptions"
+        },
+        "subdomain": {
+          "type": "string"
+        },
+        "transport": {
+          "$ref": "#/$defs/HTTPSProxyConfig_ProxyTransport"
+        },
+        "type": {
+          "description": "Proxy type (must be https)",
+          "enum": [
+            "https"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "type": "object"
+    },
+    "HTTPSProxyConfig_BandwidthQuantity": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "HTTPSProxyConfig_HTTPHeader": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "type": "object"
+    },
+    "HTTPSProxyConfig_HealthCheckConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "httpHeaders": {
+          "items": {
+            "$ref": "#/$defs/HTTPSProxyConfig_HTTPHeader"
+          },
+          "type": "array"
+        },
+        "intervalSeconds": {
+          "type": "integer"
+        },
+        "maxFailed": {
+          "type": "integer"
+        },
+        "path": {
+          "type": "string"
+        },
+        "timeoutSeconds": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "intervalSeconds"
+      ],
+      "type": "object"
+    },
+    "HTTPSProxyConfig_LoadBalancerConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "group": {
+          "type": "string"
+        },
+        "groupKey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "group"
+      ],
+      "type": "object"
+    },
+    "HTTPSProxyConfig_ProxyTransport": {
+      "additionalProperties": false,
+      "properties": {
+        "bandwidthLimit": {
+          "$ref": "#/$defs/HTTPSProxyConfig_BandwidthQuantity"
+        },
+        "bandwidthLimitMode": {
+          "type": "string"
+        },
+        "proxyProtocolVersion": {
+          "type": "string"
+        },
+        "useCompression": {
+          "type": "boolean"
+        },
+        "useEncryption": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "HTTPSProxyConfig_TypedClientPluginOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "ClientPluginOptions": true,
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "ClientPluginOptions"
+      ],
+      "type": "object"
+    },
+    "LogConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "disablePrintColor": {
+          "type": "boolean"
+        },
+        "level": {
+          "type": "string"
+        },
+        "maxDays": {
+          "type": "integer"
+        },
+        "to": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "maxDays"
+      ],
+      "type": "object"
+    },
+    "ProxyConfig": {
+      "description": "Configuration for a single proxy. The available fields depend on the proxy type.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/TCPProxyConfig"
+        },
+        {
+          "$ref": "#/$defs/UDPProxyConfig"
+        },
+        {
+          "$ref": "#/$defs/HTTPProxyConfig"
+        },
+        {
+          "$ref": "#/$defs/HTTPSProxyConfig"
+        },
+        {
+          "$ref": "#/$defs/TCPMuxProxyConfig"
+        },
+        {
+          "$ref": "#/$defs/STCPProxyConfig"
+        },
+        {
+          "$ref": "#/$defs/XTCPProxyConfig"
+        },
+        {
+          "$ref": "#/$defs/SUDPProxyConfig"
+        }
+      ],
+      "title": "Proxy Configuration"
+    },
+    "QUICOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "keepalivePeriod": {
+          "type": "integer"
+        },
+        "maxIdleTimeout": {
+          "type": "integer"
+        },
+        "maxIncomingStreams": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "STCPProxyConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "allowUsers": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "annotations": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "healthCheck": {
+          "$ref": "#/$defs/STCPProxyConfig_HealthCheckConfig"
+        },
+        "loadBalancer": {
+          "$ref": "#/$defs/STCPProxyConfig_LoadBalancerConfig"
+        },
+        "localIP": {
+          "type": "string"
+        },
+        "localPort": {
+          "type": "integer"
+        },
+        "metadatas": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "name": {
+          "type": "string"
+        },
+        "plugin": {
+          "$ref": "#/$defs/STCPProxyConfig_TypedClientPluginOptions"
+        },
+        "secretKey": {
+          "type": "string"
+        },
+        "transport": {
+          "$ref": "#/$defs/STCPProxyConfig_ProxyTransport"
+        },
+        "type": {
+          "description": "Proxy type (must be stcp)",
+          "enum": [
+            "stcp"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "type": "object"
+    },
+    "STCPProxyConfig_BandwidthQuantity": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "STCPProxyConfig_HTTPHeader": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "type": "object"
+    },
+    "STCPProxyConfig_HealthCheckConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "httpHeaders": {
+          "items": {
+            "$ref": "#/$defs/STCPProxyConfig_HTTPHeader"
+          },
+          "type": "array"
+        },
+        "intervalSeconds": {
+          "type": "integer"
+        },
+        "maxFailed": {
+          "type": "integer"
+        },
+        "path": {
+          "type": "string"
+        },
+        "timeoutSeconds": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "intervalSeconds"
+      ],
+      "type": "object"
+    },
+    "STCPProxyConfig_LoadBalancerConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "group": {
+          "type": "string"
+        },
+        "groupKey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "group"
+      ],
+      "type": "object"
+    },
+    "STCPProxyConfig_ProxyTransport": {
+      "additionalProperties": false,
+      "properties": {
+        "bandwidthLimit": {
+          "$ref": "#/$defs/STCPProxyConfig_BandwidthQuantity"
+        },
+        "bandwidthLimitMode": {
+          "type": "string"
+        },
+        "proxyProtocolVersion": {
+          "type": "string"
+        },
+        "useCompression": {
+          "type": "boolean"
+        },
+        "useEncryption": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "STCPProxyConfig_TypedClientPluginOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "ClientPluginOptions": true,
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "ClientPluginOptions"
+      ],
+      "type": "object"
+    },
+    "SUDPProxyConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "allowUsers": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "annotations": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "healthCheck": {
+          "$ref": "#/$defs/SUDPProxyConfig_HealthCheckConfig"
+        },
+        "loadBalancer": {
+          "$ref": "#/$defs/SUDPProxyConfig_LoadBalancerConfig"
+        },
+        "localIP": {
+          "type": "string"
+        },
+        "localPort": {
+          "type": "integer"
+        },
+        "metadatas": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "name": {
+          "type": "string"
+        },
+        "plugin": {
+          "$ref": "#/$defs/SUDPProxyConfig_TypedClientPluginOptions"
+        },
+        "secretKey": {
+          "type": "string"
+        },
+        "transport": {
+          "$ref": "#/$defs/SUDPProxyConfig_ProxyTransport"
+        },
+        "type": {
+          "description": "Proxy type (must be sudp)",
+          "enum": [
+            "sudp"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "type": "object"
+    },
+    "SUDPProxyConfig_BandwidthQuantity": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "SUDPProxyConfig_HTTPHeader": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "type": "object"
+    },
+    "SUDPProxyConfig_HealthCheckConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "httpHeaders": {
+          "items": {
+            "$ref": "#/$defs/SUDPProxyConfig_HTTPHeader"
+          },
+          "type": "array"
+        },
+        "intervalSeconds": {
+          "type": "integer"
+        },
+        "maxFailed": {
+          "type": "integer"
+        },
+        "path": {
+          "type": "string"
+        },
+        "timeoutSeconds": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "intervalSeconds"
+      ],
+      "type": "object"
+    },
+    "SUDPProxyConfig_LoadBalancerConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "group": {
+          "type": "string"
+        },
+        "groupKey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "group"
+      ],
+      "type": "object"
+    },
+    "SUDPProxyConfig_ProxyTransport": {
+      "additionalProperties": false,
+      "properties": {
+        "bandwidthLimit": {
+          "$ref": "#/$defs/SUDPProxyConfig_BandwidthQuantity"
+        },
+        "bandwidthLimitMode": {
+          "type": "string"
+        },
+        "proxyProtocolVersion": {
+          "type": "string"
+        },
+        "useCompression": {
+          "type": "boolean"
+        },
+        "useEncryption": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "SUDPProxyConfig_TypedClientPluginOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "ClientPluginOptions": true,
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "ClientPluginOptions"
+      ],
+      "type": "object"
+    },
+    "TCPMuxProxyConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "annotations": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "customDomains": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "healthCheck": {
+          "$ref": "#/$defs/TCPMuxProxyConfig_HealthCheckConfig"
+        },
+        "httpPassword": {
+          "type": "string"
+        },
+        "httpUser": {
+          "type": "string"
+        },
+        "loadBalancer": {
+          "$ref": "#/$defs/TCPMuxProxyConfig_LoadBalancerConfig"
+        },
+        "localIP": {
+          "type": "string"
+        },
+        "localPort": {
+          "type": "integer"
+        },
+        "metadatas": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "multiplexer": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "plugin": {
+          "$ref": "#/$defs/TCPMuxProxyConfig_TypedClientPluginOptions"
+        },
+        "routeByHTTPUser": {
+          "type": "string"
+        },
+        "subdomain": {
+          "type": "string"
+        },
+        "transport": {
+          "$ref": "#/$defs/TCPMuxProxyConfig_ProxyTransport"
+        },
+        "type": {
+          "description": "Proxy type (must be tcpmux)",
+          "enum": [
+            "tcpmux"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "type": "object"
+    },
+    "TCPMuxProxyConfig_BandwidthQuantity": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "TCPMuxProxyConfig_HTTPHeader": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "type": "object"
+    },
+    "TCPMuxProxyConfig_HealthCheckConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "httpHeaders": {
+          "items": {
+            "$ref": "#/$defs/TCPMuxProxyConfig_HTTPHeader"
+          },
+          "type": "array"
+        },
+        "intervalSeconds": {
+          "type": "integer"
+        },
+        "maxFailed": {
+          "type": "integer"
+        },
+        "path": {
+          "type": "string"
+        },
+        "timeoutSeconds": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "intervalSeconds"
+      ],
+      "type": "object"
+    },
+    "TCPMuxProxyConfig_LoadBalancerConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "group": {
+          "type": "string"
+        },
+        "groupKey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "group"
+      ],
+      "type": "object"
+    },
+    "TCPMuxProxyConfig_ProxyTransport": {
+      "additionalProperties": false,
+      "properties": {
+        "bandwidthLimit": {
+          "$ref": "#/$defs/TCPMuxProxyConfig_BandwidthQuantity"
+        },
+        "bandwidthLimitMode": {
+          "type": "string"
+        },
+        "proxyProtocolVersion": {
+          "type": "string"
+        },
+        "useCompression": {
+          "type": "boolean"
+        },
+        "useEncryption": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "TCPMuxProxyConfig_TypedClientPluginOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "ClientPluginOptions": true,
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "ClientPluginOptions"
+      ],
+      "type": "object"
+    },
+    "TCPProxyConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "annotations": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "healthCheck": {
+          "$ref": "#/$defs/TCPProxyConfig_HealthCheckConfig"
+        },
+        "loadBalancer": {
+          "$ref": "#/$defs/TCPProxyConfig_LoadBalancerConfig"
+        },
+        "localIP": {
+          "type": "string"
+        },
+        "localPort": {
+          "type": "integer"
+        },
+        "metadatas": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "name": {
+          "type": "string"
+        },
+        "plugin": {
+          "$ref": "#/$defs/TCPProxyConfig_TypedClientPluginOptions"
+        },
+        "remotePort": {
+          "type": "integer"
+        },
+        "transport": {
+          "$ref": "#/$defs/TCPProxyConfig_ProxyTransport"
+        },
+        "type": {
+          "description": "Proxy type (must be tcp)",
+          "enum": [
+            "tcp"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "type": "object"
+    },
+    "TCPProxyConfig_BandwidthQuantity": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "TCPProxyConfig_HTTPHeader": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "type": "object"
+    },
+    "TCPProxyConfig_HealthCheckConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "httpHeaders": {
+          "items": {
+            "$ref": "#/$defs/TCPProxyConfig_HTTPHeader"
+          },
+          "type": "array"
+        },
+        "intervalSeconds": {
+          "type": "integer"
+        },
+        "maxFailed": {
+          "type": "integer"
+        },
+        "path": {
+          "type": "string"
+        },
+        "timeoutSeconds": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "intervalSeconds"
+      ],
+      "type": "object"
+    },
+    "TCPProxyConfig_LoadBalancerConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "group": {
+          "type": "string"
+        },
+        "groupKey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "group"
+      ],
+      "type": "object"
+    },
+    "TCPProxyConfig_ProxyTransport": {
+      "additionalProperties": false,
+      "properties": {
+        "bandwidthLimit": {
+          "$ref": "#/$defs/TCPProxyConfig_BandwidthQuantity"
+        },
+        "bandwidthLimitMode": {
+          "type": "string"
+        },
+        "proxyProtocolVersion": {
+          "type": "string"
+        },
+        "useCompression": {
+          "type": "boolean"
+        },
+        "useEncryption": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "TCPProxyConfig_TypedClientPluginOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "ClientPluginOptions": true,
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "ClientPluginOptions"
+      ],
+      "type": "object"
+    },
+    "TLSClientConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "certFile": {
+          "type": "string"
+        },
+        "disableCustomTLSFirstByte": {
+          "type": "boolean"
+        },
+        "enable": {
+          "type": "boolean"
+        },
+        "keyFile": {
+          "type": "string"
+        },
+        "serverName": {
+          "type": "string"
+        },
+        "trustedCaFile": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TLSConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "certFile": {
+          "type": "string"
+        },
+        "keyFile": {
+          "type": "string"
+        },
+        "serverName": {
+          "type": "string"
+        },
+        "trustedCaFile": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TypedVisitorConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "VisitorConfigurer": true,
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "VisitorConfigurer"
+      ],
+      "type": "object"
+    },
+    "UDPProxyConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "annotations": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "healthCheck": {
+          "$ref": "#/$defs/UDPProxyConfig_HealthCheckConfig"
+        },
+        "loadBalancer": {
+          "$ref": "#/$defs/UDPProxyConfig_LoadBalancerConfig"
+        },
+        "localIP": {
+          "type": "string"
+        },
+        "localPort": {
+          "type": "integer"
+        },
+        "metadatas": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "name": {
+          "type": "string"
+        },
+        "plugin": {
+          "$ref": "#/$defs/UDPProxyConfig_TypedClientPluginOptions"
+        },
+        "remotePort": {
+          "type": "integer"
+        },
+        "transport": {
+          "$ref": "#/$defs/UDPProxyConfig_ProxyTransport"
+        },
+        "type": {
+          "description": "Proxy type (must be udp)",
+          "enum": [
+            "udp"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "type": "object"
+    },
+    "UDPProxyConfig_BandwidthQuantity": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "UDPProxyConfig_HTTPHeader": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "type": "object"
+    },
+    "UDPProxyConfig_HealthCheckConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "httpHeaders": {
+          "items": {
+            "$ref": "#/$defs/UDPProxyConfig_HTTPHeader"
+          },
+          "type": "array"
+        },
+        "intervalSeconds": {
+          "type": "integer"
+        },
+        "maxFailed": {
+          "type": "integer"
+        },
+        "path": {
+          "type": "string"
+        },
+        "timeoutSeconds": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "intervalSeconds"
+      ],
+      "type": "object"
+    },
+    "UDPProxyConfig_LoadBalancerConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "group": {
+          "type": "string"
+        },
+        "groupKey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "group"
+      ],
+      "type": "object"
+    },
+    "UDPProxyConfig_ProxyTransport": {
+      "additionalProperties": false,
+      "properties": {
+        "bandwidthLimit": {
+          "$ref": "#/$defs/UDPProxyConfig_BandwidthQuantity"
+        },
+        "bandwidthLimitMode": {
+          "type": "string"
+        },
+        "proxyProtocolVersion": {
+          "type": "string"
+        },
+        "useCompression": {
+          "type": "boolean"
+        },
+        "useEncryption": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "UDPProxyConfig_TypedClientPluginOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "ClientPluginOptions": true,
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "ClientPluginOptions"
+      ],
+      "type": "object"
+    },
+    "ValueSource": {
+      "additionalProperties": false,
+      "properties": {
+        "exec": {
+          "$ref": "#/$defs/ExecSource"
+        },
+        "file": {
+          "$ref": "#/$defs/FileSource"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "VirtualNetConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "address": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "WebServerConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "addr": {
+          "type": "string"
+        },
+        "assetsDir": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer"
+        },
+        "pprofEnable": {
+          "type": "boolean"
+        },
+        "tls": {
+          "$ref": "#/$defs/TLSConfig"
+        },
+        "user": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "XTCPProxyConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "allowUsers": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "annotations": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "healthCheck": {
+          "$ref": "#/$defs/XTCPProxyConfig_HealthCheckConfig"
+        },
+        "loadBalancer": {
+          "$ref": "#/$defs/XTCPProxyConfig_LoadBalancerConfig"
+        },
+        "localIP": {
+          "type": "string"
+        },
+        "localPort": {
+          "type": "integer"
+        },
+        "metadatas": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "name": {
+          "type": "string"
+        },
+        "natTraversal": {
+          "$ref": "#/$defs/XTCPProxyConfig_NatTraversalConfig"
+        },
+        "plugin": {
+          "$ref": "#/$defs/XTCPProxyConfig_TypedClientPluginOptions"
+        },
+        "secretKey": {
+          "type": "string"
+        },
+        "transport": {
+          "$ref": "#/$defs/XTCPProxyConfig_ProxyTransport"
+        },
+        "type": {
+          "description": "Proxy type (must be xtcp)",
+          "enum": [
+            "xtcp"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "type": "object"
+    },
+    "XTCPProxyConfig_BandwidthQuantity": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "XTCPProxyConfig_HTTPHeader": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "type": "object"
+    },
+    "XTCPProxyConfig_HealthCheckConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "httpHeaders": {
+          "items": {
+            "$ref": "#/$defs/XTCPProxyConfig_HTTPHeader"
+          },
+          "type": "array"
+        },
+        "intervalSeconds": {
+          "type": "integer"
+        },
+        "maxFailed": {
+          "type": "integer"
+        },
+        "path": {
+          "type": "string"
+        },
+        "timeoutSeconds": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "intervalSeconds"
+      ],
+      "type": "object"
+    },
+    "XTCPProxyConfig_LoadBalancerConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "group": {
+          "type": "string"
+        },
+        "groupKey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "group"
+      ],
+      "type": "object"
+    },
+    "XTCPProxyConfig_NatTraversalConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "disableAssistedAddrs": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "XTCPProxyConfig_ProxyTransport": {
+      "additionalProperties": false,
+      "properties": {
+        "bandwidthLimit": {
+          "$ref": "#/$defs/XTCPProxyConfig_BandwidthQuantity"
+        },
+        "bandwidthLimitMode": {
+          "type": "string"
+        },
+        "proxyProtocolVersion": {
+          "type": "string"
+        },
+        "useCompression": {
+          "type": "boolean"
+        },
+        "useEncryption": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "XTCPProxyConfig_TypedClientPluginOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "ClientPluginOptions": true,
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "ClientPluginOptions"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/fatedier/frp/pkg/config/v1/client-config",
+  "$ref": "#/$defs/ClientConfig",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "JSON Schema for frpc (FRP client) configuration file",
+  "title": "FRP Client Configuration"
+}
