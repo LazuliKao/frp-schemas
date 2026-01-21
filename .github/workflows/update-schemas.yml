@@ -1,0 +1,96 @@
+name: Update FRP Schemas
+
+on:
+  schedule:
+    # Run every Monday at 00:00 UTC
+    - cron: '0 0 * * 1'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  check-and-update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: Get current frp version
+        id: current-version
+        run: |
+          CURRENT_VERSION=$(grep 'github.com/fatedier/frp' go.mod | awk '{print $2}')
+          echo "version=${CURRENT_VERSION}" >> $GITHUB_OUTPUT
+          echo "Current version: ${CURRENT_VERSION}"
+
+      - name: Get latest frp release
+        id: latest-version
+        run: |
+          LATEST_VERSION=$(curl -s https://api.github.com/repos/fatedier/frp/releases/latest | jq -r .tag_name)
+          echo "version=${LATEST_VERSION}" >> $GITHUB_OUTPUT
+          echo "Latest version: ${LATEST_VERSION}"
+
+      - name: Compare versions
+        id: compare
+        run: |
+          CURRENT="${{ steps.current-version.outputs.version }}"
+          LATEST="${{ steps.latest-version.outputs.version }}"
+          
+          if [ "${CURRENT}" = "${LATEST}" ]; then
+            echo "needs_update=false" >> $GITHUB_OUTPUT
+            echo "No update needed. Current version (${CURRENT}) is up to date."
+          else
+            echo "needs_update=true" >> $GITHUB_OUTPUT
+            echo "Update available: ${CURRENT} -> ${LATEST}"
+          fi
+
+      - name: Update Go dependencies
+        if: steps.compare.outputs.needs_update == 'true'
+        run: |
+          echo "Updating frp to ${{ steps.latest-version.outputs.version }}"
+          go get github.com/fatedier/frp@${{ steps.latest-version.outputs.version }}
+          go mod tidy
+
+      - name: Generate schemas
+        if: steps.compare.outputs.needs_update == 'true'
+        run: |
+          go run main.go
+
+      - name: Check for changes
+        if: steps.compare.outputs.needs_update == 'true'
+        id: changes
+        run: |
+          if git diff --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes detected in generated schemas"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes detected in generated schemas"
+          fi
+
+      - name: Commit and push changes
+        if: steps.compare.outputs.needs_update == 'true' && steps.changes.outputs.has_changes == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add go.mod go.sum frpc-schema.json frps-schema.json
+          git commit -m "chore: update frp to ${{ steps.latest-version.outputs.version }}"
+          git push
+
+      - name: Create summary
+        run: |
+          echo "## Update Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Current Version**: ${{ steps.current-version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Latest Version**: ${{ steps.latest-version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Update Needed**: ${{ steps.compare.outputs.needs_update }}" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.compare.outputs.needs_update }}" = "true" ]; then
+            echo "- **Changes Detected**: ${{ steps.changes.outputs.has_changes }}" >> $GITHUB_STEP_SUMMARY
+          fi
