@@ -3,7 +3,7 @@ module github.com/code-yeongyu/frp-schemas
 go 1.25.6
 
 require (
-	github.com/fatedier/frp v0.66.0
+	github.com/fatedier/frp v0.67.0
 	github.com/invopop/jsonschema v0.13.0
 )
 

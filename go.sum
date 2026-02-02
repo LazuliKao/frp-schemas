@@ -5,8 +5,8 @@ github.com/buger/jsonparser v1.1.1/go.mod h1:6RYKKt7H4d4+iWqouImQ9R2FZql3VbhNgx2
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/fatedier/frp v0.66.0 h1:HxuqqttZwWyK27ThRCw5/vDZgxsjoM64/ndFEQfgxUg=
-github.com/fatedier/frp v0.66.0/go.mod h1:0Q3mAI0c9WtAsgMQpTQhinWTKa2Qp121YWsqaFu41Zg=
+github.com/fatedier/frp v0.67.0 h1:w6xHLkruAJcq+fZP9VOiY6w/FBy/wB1aPqA4frs98K8=
+github.com/fatedier/frp v0.67.0/go.mod h1:0Q3mAI0c9WtAsgMQpTQhinWTKa2Qp121YWsqaFu41Zg=
 github.com/fatedier/golib v0.5.1 h1:hcKAnaw5mdI/1KWRGejxR+i1Hn/NvbY5UsMKDr7o13M=
 github.com/fatedier/golib v0.5.1/go.mod h1:W6kIYkIFxHsTzbgqg5piCxIiDo4LzwgTY6R5W8l9NFQ=
 github.com/invopop/jsonschema v0.13.0 h1:KvpoAJWEjR3uD9Kbm2HWJmqsEaHt8lBUpd0qHcIi21E=
