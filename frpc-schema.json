@@ -120,6 +120,9 @@
           },
           "type": "array"
         },
+        "store": {
+          "$ref": "#/$defs/StoreConfig"
+        },
         "transport": {
           "$ref": "#/$defs/ClientTransportConfig"
         },
@@ -998,6 +1001,15 @@
         "type",
         "ClientPluginOptions"
       ],
+      "type": "object"
+    },
+    "StoreConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "TCPMuxProxyConfig": {
