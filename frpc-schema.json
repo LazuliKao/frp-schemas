@@ -189,6 +189,9 @@
         },
         "tls": {
           "$ref": "#/$defs/TLSClientConfig"
+        },
+        "wireProtocol": {
+          "type": "string"
         }
       },
       "type": "object"
