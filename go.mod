@@ -3,7 +3,7 @@ module github.com/code-yeongyu/frp-schemas
 go 1.25.6
 
 require (
-	github.com/fatedier/frp v0.70.1
+	github.com/fatedier/frp v0.71.0
 	github.com/invopop/jsonschema v0.13.0
 )
 
@@ -11,7 +11,7 @@ require (
 	github.com/Azure/go-ntlmssp v0.1.0 // indirect
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
-	github.com/fatedier/golib v0.8.1 // indirect
+	github.com/fatedier/golib v0.8.2 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.6 // indirect
 	github.com/klauspost/reedsolomon v1.12.0 // indirect
 	github.com/kr/text v0.2.0 // indirect
